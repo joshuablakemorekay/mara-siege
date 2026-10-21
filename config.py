@@ -22,14 +22,12 @@ UI_PANEL_X = GRID_WIDTH
 # Colors - Buddhist meditation garden themed
 BACKGROUND = (35, 50, 40)  # Deep garden green
 GRID_LINE = (50, 70, 60)
-BUILDABLE = (40, 60, 50)
 
 # Meditation Garden Elements
 LOTUS_POND_COLOR = (60, 100, 120)  # Water blue
 LOTUS_FLOWER_COLOR = (255, 200, 220)  # Pink lotus
 BUDDHA_STATUE_COLOR = (180, 150, 100)  # Stone/bronze
 MONK_ROBE_COLOR = (255, 140, 0)  # Saffron orange
-GRASS_COLOR = (70, 120, 70)  # Lush grass
 
 # UI Colors
 UI_BG = (15, 10, 25)
@@ -40,10 +38,7 @@ BLUE = (100, 150, 255)
 
 # Game Object Colors
 TEMPLE_COLOR = (255, 215, 100)  # Golden
-TOWER_COLOR = (100, 200, 255)  # Light blue
-ENEMY_COLOR = (200, 50, 50)  # Dark red
 PROJECTILE_COLOR = (255, 255, 150)  # Light yellow
-WALL_COLOR = (100, 100, 120)  # Stone grey
 
 # Temple settings
 TEMPLE_HEALTH = 100
@@ -106,10 +101,6 @@ TOWER_STATS = {
         'upgrade_range': 25
     }
 }
-
-# Wall stats
-WALL_COST = 25
-WALL_HEALTH = 100
 
 # Enemy stats
 ENEMY_STATS = {
@@ -239,9 +230,7 @@ BOSS_WAVES = {
 FINAL_BOSS = 'boss_mara_tyrant'
 
 # Wave settings
-WAVE_DELAY = 15.0  # Seconds between waves (was 5.0)
 ENEMIES_PER_WAVE_BASE = 5
-WAVE_DIFFICULTY_MULTIPLIER = 1.2  # Health/count increases per wave
 
 # Enemy paths (grid coordinates) - each starts at a spawn gate and ends next to the temple.
 # Only the corners are listed; the tiles in between are filled in by terrain.py
@@ -287,7 +276,6 @@ STATE_DEFEAT = 'defeat'
 # Wall system - NEW!
 WALL_COST_MERIT = 15
 WALL_COST_CONCENTRATION = 5
-WALL_HEALTH = 100
 WALL_COLOR = (120, 100, 80)  # Stone gray-brown
 WALL_DAMAGED_COLOR = (80, 60, 50)  # Darker when damaged
 WALL_SIZE = TILE_SIZE  # Same as grid tiles

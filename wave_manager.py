@@ -4,7 +4,7 @@ Wave Manager - Handles spawning waves of enemies
 
 import random
 from config import (ENEMIES_PER_WAVE_BASE,
-                   WAVE_DIFFICULTY_MULTIPLIER, BOSS_WAVES, FINAL_BOSS)
+                   BOSS_WAVES, FINAL_BOSS)
 from enemy import (DoubtMara, CravingMara, DelusionMara, AngerMara,
                    IgnoranceMara, EnvyMara, PrideMara,
                    BossMaraLord, BossMaraTyrant)
