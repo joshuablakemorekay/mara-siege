@@ -950,17 +950,36 @@ class Game:
         
         # Lotus, Buddha, Monk positions
         positions = [
-            (LOTUS_POND_POS, '🪷', (255, 200, 255), 'metta'),
-            (BUDDHA_STATUE_POS, '🧘', (100, 200, 255), 'samadhi'),
-            (MONK_POS, '👨‍🦲', (255, 150, 50), 'karuna')
+            (LOTUS_POND_POS, (255, 200, 255), 'metta'),
+            (BUDDHA_STATUE_POS, (100, 200, 255), 'samadhi'),
+            (MONK_POS, (255, 150, 50), 'karuna')
         ]
-        
-        for grid_pos, emoji, color, key in positions:
+
+        for grid_pos, color, key in positions:
             x = grid_pos[0] * TILE_SIZE + TILE_SIZE // 2
             y = grid_pos[1] * TILE_SIZE + TILE_SIZE // 2
-            self.draw_ability_object(x, y, emoji, color, key, cooldowns[key], mouse_pos)
-    
-    def draw_ability_object(self, x, y, emoji, color, ability_key, cooldown, mouse_pos):
+            self.draw_ability_object(x, y, color, key, cooldowns[key], mouse_pos)
+
+    def draw_ability_icon(self, ability_key, x, y):
+        """Draw a small picture for each ability (the font can't draw emoji)"""
+        x, y = int(x), int(y)
+        if ability_key == 'metta':
+            # Lotus flower - six petals around a gold centre
+            for angle in range(0, 360, 60):
+                petal_x = x + int(math.cos(math.radians(angle)) * 7)
+                petal_y = y + int(math.sin(math.radians(angle)) * 7)
+                pygame.draw.circle(self.screen, (255, 255, 255), (petal_x, petal_y), 4)
+            pygame.draw.circle(self.screen, (255, 215, 100), (x, y), 4)
+        elif ability_key == 'samadhi':
+            # Seated meditator - head above a triangle body
+            pygame.draw.polygon(self.screen, (255, 255, 255), [(x - 10, y + 10), (x + 10, y + 10), (x, y - 3)])
+            pygame.draw.circle(self.screen, (255, 255, 255), (x, y - 8), 5)
+        else:
+            # Monk - shaved head above a saffron robe
+            pygame.draw.ellipse(self.screen, (160, 70, 20), (x - 10, y - 1, 20, 13))
+            pygame.draw.circle(self.screen, (225, 185, 145), (x, y - 6), 6)
+
+    def draw_ability_object(self, x, y, color, ability_key, cooldown, mouse_pos):
         """Draw single ability object"""
         ability = self.abilities.get_ability(ability_key)
         radius = ABILITY_OBJECT_SIZE // 2
@@ -979,12 +998,7 @@ class Game:
         pygame.draw.circle(self.screen, (255, 255, 255), (int(x), int(y)), pulse, 2)
         
         # Icon
-        try:
-            icon = self.font_large.render(emoji, True, (255, 255, 255))
-            self.screen.blit(icon, icon.get_rect(center=(x, y)))
-        except:
-            fallback = self.font_medium.render(ability.name[0], True, (255, 255, 255))
-            self.screen.blit(fallback, fallback.get_rect(center=(x, y)))
+        self.draw_ability_icon(ability_key, x, y)
         
         # Cooldown timer
         if cooldown > 0:
@@ -1152,7 +1166,7 @@ class Game:
                 sell_text = self.font_small.render("Hover + S to sell (50%)", True, (180, 180, 180))
                 self.screen.blit(sell_text, (UI_PANEL_X + 10, y_pos + 134))
             else:
-                max_text = self.font_small.render("MAX LEVEL ★★★", True, GOLD)
+                max_text = self.font_small.render("MAX LEVEL", True, GOLD)
                 self.screen.blit(max_text, (UI_PANEL_X + 10, y_pos + 90))  # Was 78, now 90
 
         # Wall panel (if wall selected) - same spot as the tower panel

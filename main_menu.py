@@ -200,7 +200,7 @@ class MainMenu:
             "• Build towers to attack",
             "• Build walls to block paths",
             "• Upgrade for more power",
-            "• Survive 20 waves",
+            "• Survive every wave",
             "",
             "Resources:",
             "  Merit (M) - From enemy kills",
@@ -245,9 +245,13 @@ class MainMenu:
         self.screen.blit(diff_name, (self.difficulty_button.x + 10, self.difficulty_button.y + 25))
         
         # Dropdown arrow
-        arrow = "▼" if not self.difficulty_dropdown_open else "▲"
-        arrow_text = self.font_medium.render(arrow, True, TEXT_COLOR)
-        self.screen.blit(arrow_text, (self.difficulty_button.right - 30, self.difficulty_button.y + 12))
+        ax = self.difficulty_button.right - 25
+        ay = self.difficulty_button.centery
+        if self.difficulty_dropdown_open:
+            arrow_points = [(ax - 7, ay + 4), (ax + 7, ay + 4), (ax, ay - 5)]  # Pointing up
+        else:
+            arrow_points = [(ax - 7, ay - 4), (ax + 7, ay - 4), (ax, ay + 5)]  # Pointing down
+        pygame.draw.polygon(self.screen, TEXT_COLOR, arrow_points)
         
         # Dropdown options (if open)
         if self.difficulty_dropdown_open:
@@ -319,7 +323,7 @@ class MainMenu:
         pygame.draw.rect(self.screen, color, self.game_guide_button)
         pygame.draw.rect(self.screen, border, self.game_guide_button, 2)
         
-        text = self.font_medium.render("📖 GAME GUIDE", True, (255, 255, 255))
+        text = self.font_medium.render("GAME GUIDE", True, (255, 255, 255))
         text_rect = text.get_rect(center=self.game_guide_button.center)
         self.screen.blit(text, text_rect)
         
@@ -331,7 +335,7 @@ class MainMenu:
         pygame.draw.rect(self.screen, color2, self.strategy_guide_button)
         pygame.draw.rect(self.screen, border2, self.strategy_guide_button, 2)
         
-        text2 = self.font_medium.render("⚔️ STRATEGY", True, (255, 255, 255))
+        text2 = self.font_medium.render("STRATEGY", True, (255, 255, 255))
         text2_rect = text2.get_rect(center=self.strategy_guide_button.center)
         self.screen.blit(text2, text2_rect)
     

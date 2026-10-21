@@ -149,12 +149,11 @@ class Tower:
         ]
         pygame.draw.polygon(screen, self.color, top_points)
         
-        # Draw level indicator (stars)
+        # Draw level indicator (gold dots - the font can't draw star symbols)
         if self.level > 1:
-            font = pygame.font.Font(None, 16)
-            level_text = font.render("★" * self.level, True, (255, 215, 0))
-            level_rect = level_text.get_rect(center=(self.x, self.y + self.size // 2 + 12))
-            screen.blit(level_text, level_rect)
+            start_x = self.x - (self.level - 1) * 4
+            for i in range(self.level):
+                pygame.draw.circle(screen, (255, 215, 0), (int(start_x + i * 8), int(self.y + self.size // 2 + 8)), 3)
         
         # Draw projectiles
         for projectile in self.projectiles:
