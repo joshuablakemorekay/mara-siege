@@ -1,177 +1,87 @@
-# Mara's Siege - Buddhist Tower Defense Game
+# Mara's Siege
 
-A strategic tower defense game where you defend the temple of the mind against waves of Mara invaders while striving toward enlightenment.
+A Buddhist-themed tower defense game made with Python and Pygame. You protect a meditating mind's temple from 20 waves of Mara, the Buddhist figure of temptation and delusion.
 
-## Concept
+![Wave 10 on the Temple Garden map: towers on the grass terraces, an upgraded wall on the path, and the Mara Lord boss marching toward the temple](docs/screenshot.png)
 
-You enter the mind of a meditator in deep meditation, being attacked by evil Mara (Buddhist concept of temptation/delusion). Use Buddhist mental qualities as strategic defenses to protect the temple and achieve enlightenment.
+## What I built and why
 
-## How to Play
+I wanted a game that teaches Buddhist ideas through play instead of text. The towers are mental qualities: Sati (mindfulness), Viriya (energy) and Samadhi (concentration). The enemies are the hindrances that attack the mind, like Doubt, Craving and Pride.
 
-### Objective
-- **Victory**: Survive 20 waves AND accumulate 1000 Merit
-- **Defeat**: Temple health reaches 0 OR 10+ breaches occur
+An earlier version grew to 24 rounds of changes and stopped working. I went back to the last stable version and only added features one at a time, testing each one.
 
-### Resources (V4 NEW SYSTEM!)
-- **Merit (M)** - Gold: From killing enemies, builds Viriya towers
-- **Concentration (C)** - Orange: From wave completion, builds Samadhi towers  
-- **Mindfulness (F)** - Blue: From perfect waves + regen, builds Sati towers
+## Features
 
-### Controls (V4 SIMPLIFIED!)
-- **Left Click**: Place tower OR Select existing tower
-- **Right Click**: Upgrade selected tower (instant!)
-- **1/2/3 Keys**: Quick-select tower type
-- **SPACE**: Start next wave
-- **ESC**: Quit game
+- **Two maps**
+  - **Temple Garden:** sandy paths for Mara to walk, raised grass terraces for your towers and rocky cliff edges between them.
+  - **Open Field:** the original map, where you can build anywhere and Mara walk straight at the temple.
+- **3 towers:** each one is a Buddhist mental quality with its own cost, damage and range. Every tower can be upgraded twice.
+- **Walls with 3 levels:**
+  - Level 1 slows Mara.
+  - Level 2 slows them twice as much and burns their health.
+  - Level 3 stops them dead while it burns them.
+- **3 abilities**, each with 3 uses per game:
+  - The lotus pond (Metta) heals the temple.
+  - The Buddha statue (Samadhi Wave) freezes every enemy for 5 seconds.
+  - The monk (Karuna Strike) hits every enemy at once, in slow motion.
+- **7 Mara enemies**, each with its own shape, speed and health. Some sway side to side, and Ignorance Mara wears armour.
+- **Boss waves:** the Mara Lord arrives on wave 10 and the Mara Tyrant on wave 20. Each has a big health bar across the top of the screen.
+- **3 resources** to manage:
+  - Merit comes from defeating enemies.
+  - Concentration comes from finishing waves.
+  - Mindfulness comes from perfect waves where nothing reaches the temple.
+- **Selling:** hover over a tower or wall and press S to get half its cost back.
+- **Sound effects** generated in code: temple bells, a boss gong, singing-bowl tones and more. Press M to mute.
 
-### Tower Types (Buddhist Mental Qualities)
+## How to play
 
-#### Viriya Tower (Energy) - 40 Merit
-- Fast attack rate, moderate damage
-- **Cost**: 40M (Merit only - most accessible!)
-- **Upgradeable**: +5 damage, +15 range per level
-- Color: Orange
+| Key / mouse | What it does |
+|---|---|
+| Left click | Place a tower or wall, or select one you've built |
+| Right click | Upgrade the selected tower or wall |
+| 1 / 2 / 3 | Choose Sati, Viriya or Samadhi tower |
+| W | Switch between building towers and walls |
+| S | Sell the tower or wall under the mouse |
+| Space | Start the next wave early |
+| M | Mute or unmute sound |
+| X | Clear what you're holding |
+| Esc | Quit |
 
-#### Samadhi Tower (Concentration) - 35M + 20C
-- Slow attack, very high damage
-- **Cost**: 35 Merit + 20 Concentration
-- **Upgradeable**: +20 damage, +25 range per level
-- Color: Purple
+Click the lotus, the Buddha or the monk to use their abilities.
 
-#### Sati Tower (Mindfulness) - 30M + 15F
-- Balanced stats, good all-around
-- **Cost**: 30 Merit + 15 Mindfulness
-- **Upgradeable**: +8 damage, +20 range per level
-- Color: Light Blue
+**To win:** survive all 20 waves with at least 1,000 Merit.
+**You lose if:** the temple's health reaches 0, or 10 Mara break through.
 
-### Enemy Types (Mara Manifestations)
+## Tech stack
 
-**7 unique enemy types with different shapes, sizes, and behaviors!**
+- **Python 3.12:** the language the game is written in.
+- **Pygame:** draws the game and plays sound.
+- **No image or sound files:** every shape and sound is made in code.
 
-#### Basic Enemies (Waves 1-5)
-- **Doubt Mara** ⚫ - Slow circle, moderate health
-- **Craving Mara** ⚫ - Fast circle, low health
+## How to run it locally
 
-#### Intermediate (Waves 6-11)
-- **Delusion Mara** 🫧 - Large blob, **zig-zag movement**
-- **Anger Mara** 🔺 - Triangle, very fast, **damages towers**
+1. Install [Python 3.12](https://www.python.org/downloads/).
+2. Download this project:
+   ```bash
+   git clone https://github.com/joshuablakemorekay/mara-siege.git
+   cd mara-siege
+   ```
+3. Install Pygame:
+   ```bash
+   pip install pygame
+   ```
+4. Start the game:
+   ```bash
+   python main.py
+   ```
+5. On the menu, pick a map, then press **START GAME**.
 
-#### Advanced (Waves 12-17)
-- **Ignorance Mara** ⬛ - Large square, **50% armor**
-- **Envy Mara** 📏 - Elongated, **serpentine movement**, **steals Merit**
+## What I learned
 
-#### Elite (Waves 18-20)
-- **Pride Mara** 👑 - Crown shape, **arc movement**, elite stats
-
-**See [ENEMY_GUIDE.md](ENEMY_GUIDE.md) for complete enemy strategies!**
-
-### Visual Effects (NEW!)
-- **Death Explosions**: Enemies burst into particles when defeated
-- **Projectile Auras**: Pulsing colored auras based on tower type
-  - Blue: Mindfulness (Sati)
-  - Orange: Energy (Viriya)
-  - Purple: Concentration (Samadhi)
-- **Meditation Garden**: Lotus pond, Buddha statue, monks in orange robes
-
-## Installation & Running
-
-### Requirements
-```bash
-python 3.7+
-pygame
-```
-
-### Install Dependencies
-```bash
-pip install pygame
-```
-
-### Run the Game
-```bash
-cd mara_siege
-python main.py
-```
-
-## Game Mechanics
-
-### Wave System
-- 20 total waves to complete
-- Enemies spawn in increasing numbers
-- Health scales with wave number
-- 5-second delay between waves
-
-### Placement Strategy
-- Towers can be placed anywhere except:
-  - On the temple
-  - On existing towers
-  - Outside the grid
-- Plan strategic chokepoints
-- Use range circles to optimize coverage
-
-### Resource Economy
-- Earn Merit by defeating enemies
-- Each enemy type gives different Merit rewards
-- Manage spending vs. saving for stronger towers
-
-## File Structure
-```
-mara_siege/
-├── main.py              # Main game loop (500+ lines)
-├── config.py            # Game constants
-├── resource_manager.py  # Resource tracking
-├── temple.py            # Temple/central structure
-├── tower.py             # Tower classes with upgrades
-├── enemy.py             # Enemy classes with labels
-├── projectile.py        # Projectile attacks with auras
-├── wave_manager.py      # Wave spawning logic
-├── particles.py         # Particle system for effects
-├── README.md            # This file
-└── CHANGELOG.md         # Version history
-```
-
-## Future Phases (Planned)
-
-### Phase 2: Advanced Buddhist Abilities
-- **Metta Towers**: Convert enemies to allies
-- **Karuna Towers**: Heal damaged structures
-- **Panna Towers**: Area damage with wisdom
-
-### Phase 3: Enhanced Gameplay
-- More enemy types (Anger, Delusion, Pride, Restlessness)
-- Boss waves (Mara King)
-- Upgradable towers
-- Special abilities using Concentration/Mindfulness
-
-### Phase 4: Polish & Content
-- Save/load system
-- Achievement system
-- Better graphics/sprites
-- Sound effects and music
-- Difficulty modes
-
-## Development Notes
-
-**Built with**: Python + Pygame  
-**Theme**: Buddhist meditation and mental cultivation  
-**Genre**: 2D Tower Defense  
-**Version**: 3.0 - Enemy Variety Update  
-**Status**: Phase 1 Complete - 7 Unique Enemies!
-
-## What's New in V3
-
-✨ **7 Enemy Types** - Diverse Mara manifestations  
-✨ **Unique Shapes** - Circle, Triangle, Square, Blob, Elongated, Crown  
-✨ **Movement Patterns** - Straight, Zig-Zag, Serpentine, Arc  
-✨ **Special Abilities** - Armor, Tower Damage, Merit Steal  
-✨ **Progressive Waves** - New enemies introduced gradually  
-✨ **Strategic Depth** - Each enemy requires different counter-strategy
-
-## Credits
-
-**Game Design**: Joshua  
-**Buddhist Concepts**: Traditional Theravada Buddhism  
-**Development**: Learning project combining game dev with dharma practice
+- **Going back can be the fastest way forward.** Version 24 had piled-up features that broke the core game. Rebuilding from the stable original took much less time than untangling it.
+- **Keep data separate from code.** The map paths, wall levels and boss waves all live in `config.py`, so I can rebalance the game without touching the logic.
+- **Small, tested steps.** I tested each new feature with an automated run of the game before playing it. That made it easy to tell which change caused a problem.
 
 ---
 
-*"Just as a solid rock is not shaken by the storm, even so the wise are not affected by praise or blame." - Dhammapada*
+*"Just as a solid rock is not shaken by the storm, even so the wise are not affected by praise or blame." (Dhammapada 81)*
