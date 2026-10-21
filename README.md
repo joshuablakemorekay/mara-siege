@@ -2,6 +2,8 @@
 
 A Buddhist-themed tower defense game made with Python and Pygame. You protect a meditating mind's temple from waves of Mara, the Buddhist figure of temptation and delusion.
 
+[![Tests](https://github.com/joshuablakemorekay/mara-siege/actions/workflows/tests.yml/badge.svg)](https://github.com/joshuablakemorekay/mara-siege/actions/workflows/tests.yml)
+
 **[Download and play it free on itch.io](https://smoald.itch.io/mara-siege)** (Windows, no install needed).
 
 ![Wave 10 on the Temple Garden map: towers on the grass terraces, an upgraded wall on the path, and the Mara Lord boss marching toward the temple](docs/screenshot.png)
@@ -115,7 +117,7 @@ There are 14 automated tests in `tests/test_game.py`. They run the real game wit
 python -m unittest discover tests
 ```
 
-They take about 20 seconds. There's no automatic test run on GitHub yet, so I run them before each commit.
+They take about 20 seconds. GitHub also runs them automatically on every push (see the Tests badge at the top), so a broken change shows up straight away.
 
 ## Engineering Decisions
 
@@ -137,7 +139,6 @@ They take about 20 seconds. There's no automatic test run on GitHub yet, so I ru
 
 ## What's Next
 
-- Run the tests automatically on GitHub for every push (GitHub Actions).
 - Balance the difficulty levels using real player feedback.
 - Add the temple picture and a short gameplay video.
 

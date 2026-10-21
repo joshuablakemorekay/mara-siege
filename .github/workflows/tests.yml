@@ -1,0 +1,23 @@
+# Runs the automated tests on GitHub every time code is pushed or a pull request is opened
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The tests use SDL's dummy video and audio drivers, so no screen or sound card is needed
+      - name: Run tests
+        run: python -m unittest discover tests -v
