@@ -89,11 +89,57 @@ Click the lotus, the Buddha or the monk to use their abilities.
    ```
 5. On the menu, pick a difficulty and a map, then press **START GAME**.
 
+## Architecture
+
+Each file has one job:
+- `main.py`: the game loop. It handles input, updates every system each frame, and draws.
+- `config.py`: all the numbers and data, like tower stats, enemy stats, map paths, wall levels and boss waves. I can rebalance the game here without touching any logic.
+- `terrain.py`: turns the list of path corners into tiles and draws the garden map once, then reuses it every frame.
+- `wave_manager.py`: builds each wave, applies the difficulty settings and spawns enemies along the paths.
+- `enemy.py`, `tower.py`, `wall.py`, `temple.py`: the game pieces.
+- `sounds.py`: makes every sound effect from sine waves when the game starts, so there are no audio files.
+- `main_menu.py`, `guides.py`: the menu and the in-game guides.
+
+## Testing
+
+There are 14 automated tests in `tests/test_game.py`. They run the real game with no window or sound:
+- build rules on both maps
+- selling refunds
+- all three wall levels
+- Envy's Merit steal and Anger's tower stun
+- every difficulty setting
+- the screen shake
+- a 10-wave game on each map
+
+```bash
+python -m unittest discover tests
+```
+
+They take about 20 seconds. There's no automatic test run on GitHub yet, so I run them before each commit.
+
+## Engineering Decisions
+
+- **Rebuilt from the original instead of patching v24.** v24's crash was a symptom. Its zoom, multi-map and pathfinding layers had tangled the core game, and rebuilding was faster than untangling.
+- **Fixed paths instead of pathfinding.** Enemies follow hand-placed routes. Pathfinding is what broke v24, and fixed paths make tower placement a clear puzzle.
+- **Level 3 walls block instead of rerouting.** Rerouting would need pathfinding again. A full block gives the same feeling with none of the risk.
+- **Sounds and graphics generated in code.** There are no asset files to lose or license, and the `.exe` packaging stays simple.
+- **Published early as "In development".** Real player feedback will guide v1.1 better than guessing.
+
 ## What I learned
 
 - **Going back can be the fastest way forward.** Version 24 had piled-up features that broke the core game. Rebuilding from the stable original took much less time than untangling it.
 - **Keep data separate from code.** The map paths, wall levels and boss waves all live in `config.py`, so I can rebalance the game without touching the logic.
 - **Small, tested steps.** I tested each new feature with an automated run of the game before playing it. That made it easy to tell which change caused a problem.
+
+## My Journey
+
+**2026-10-21: Rescued from v24 and shipped v1.0.** v24 had grown to 24 rounds of changes and crashed on every map. I went back to the original, added features one at a time, kept the old map as a second mode and published v1.0 on itch.io. *Lesson: "Don't over do it like last time. Be satisfied."* Full entry in [JOURNAL.md](JOURNAL.md).
+
+## What's Next
+
+- Run the tests automatically on GitHub for every push (GitHub Actions).
+- Balance the difficulty levels using real player feedback.
+- Add the temple picture and a short gameplay video.
 
 ---
 
