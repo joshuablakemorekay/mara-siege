@@ -6,6 +6,7 @@ A Buddhist-themed tower defense game
 import pygame
 import sys
 import math
+import random
 from config import *
 from resource_manager import ResourceManager
 from temple import Temple
@@ -552,12 +553,12 @@ class Game:
                 self.slow_motion_active = False
             # Apply slow motion to delta time
             delta_time *= self.slow_motion_factor
-            
-            # Reduce screen shake
-            self.screen_shake *= 0.9
-            if self.screen_shake < 0.5:
-                self.screen_shake = 0
-        
+
+        # Screen shake fades out every frame (it used to only fade during slow motion)
+        self.screen_shake *= 0.9
+        if self.screen_shake < 0.5:
+            self.screen_shake = 0
+
         # Fade white flash
         if self.flash_alpha > 0:
             self.flash_alpha -= 15  # Fade speed
@@ -593,6 +594,7 @@ class Game:
             boss_name = ENEMY_STATS[self.wave_manager.boss_waves[wave]]['name']
             self.show_message(f"BOSS WAVE! {boss_name} approaches!", (255, 60, 60))
             sounds.play('gong')
+            self.screen_shake = 10  # A rumble as the boss arrives
             self.feedback_timer = 4.0
         
         # Check wall collisions and damage
@@ -666,6 +668,8 @@ class Game:
         for enemy in breaches:
             self.temple.register_breach(enemy.temple_damage)
             sounds.play('breach')
+            if enemy.is_boss:
+                self.screen_shake = 20  # A boss hitting the temple shakes the whole map
             
             # Envy Mara steals Merit when it gets through
             if enemy.merit_steal > 0:
@@ -688,6 +692,8 @@ class Game:
         
         if self.state == STATE_PLAYING:
             self.draw_game()
+            if self.screen_shake > 0:
+                self.apply_screen_shake()
         elif self.state == STATE_VICTORY:
             self.draw_victory_screen()
         elif self.state == STATE_DEFEAT:
@@ -695,19 +701,19 @@ class Game:
         
         pygame.display.flip()
     
+    def apply_screen_shake(self):
+        """Jolt the map by a random offset - the side panel stays still so it's readable"""
+        strength = int(self.screen_shake)
+        offset = (random.randint(-strength, strength), random.randint(-strength, strength))
+        map_area = pygame.Rect(0, 0, GRID_WIDTH, GRID_HEIGHT)
+        snapshot = self.screen.subsurface(map_area).copy()
+        self.screen.set_clip(map_area)  # Don't let the shifted map spill over the side panel
+        self.screen.fill(BACKGROUND, map_area)
+        self.screen.blit(snapshot, offset)
+        self.screen.set_clip(None)
+
     def draw_game(self):
         """Draw the main game"""
-        # Calculate screen shake offset
-        shake_x = 0
-        shake_y = 0
-        if self.screen_shake > 0:
-            import random
-            shake_x = random.randint(-int(self.screen_shake), int(self.screen_shake))
-            shake_y = random.randint(-int(self.screen_shake), int(self.screen_shake))
-        
-        # Create surface for game area (to apply shake)
-        game_surface = pygame.Surface((GRID_WIDTH, GRID_HEIGHT))
-        
         # Draw the terrain (paths, terraces, cliffs) or the open field grid
         if self.terrain:
             self.screen.blit(self.terrain, (0, 0))
