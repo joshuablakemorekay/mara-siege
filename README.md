@@ -79,9 +79,9 @@ Click the lotus, the Buddha or the monk to use their abilities.
    git clone https://github.com/joshuablakemorekay/mara-siege.git
    cd mara-siege
    ```
-3. Install Pygame:
+3. Install what the game needs:
    ```bash
-   pip install pygame
+   pip install -r requirements.txt
    ```
 4. Start the game:
    ```bash
