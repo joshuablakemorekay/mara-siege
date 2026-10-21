@@ -2,6 +2,8 @@
 
 A Buddhist-themed tower defense game made with Python and Pygame. You protect a meditating mind's temple from waves of Mara, the Buddhist figure of temptation and delusion.
 
+**[Download and play it free on itch.io](https://smoald.itch.io/mara-siege)** (Windows, no install needed).
+
 ![Wave 10 on the Temple Garden map: towers on the grass terraces, an upgraded wall on the path, and the Mara Lord boss marching toward the temple](docs/screenshot.png)
 
 ## What I built and why
