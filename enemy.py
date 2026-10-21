@@ -44,7 +44,7 @@ class Enemy:
         
         # Special abilities
         self.armor = stats.get('armor', 0)  # Damage reduction
-        self.tower_damage = stats.get('tower_damage', 0)
+        self.stuns_towers = stats.get('stuns_towers', False)
         self.merit_steal = stats.get('merit_steal', 0)
         self.metta_immune = stats.get('metta_immune', False)
         self.is_boss = stats.get('is_boss', False)

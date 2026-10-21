@@ -158,7 +158,7 @@ ENEMY_STATS = {
         'size': 24,
         'shape': 'triangle',
         'movement': 'straight',
-        'tower_damage': 5  # Damages towers on contact
+        'stuns_towers': True  # Stuns the first tower it passes
     },
     'ignorance': {
         'name': 'Ignorance Mara',
@@ -304,6 +304,10 @@ WALL_LEVELS = {
 WALL_MAX_LEVEL = 3
 WALL_ATTACK_DAMAGE = 5  # Health per second each Mara knocks off a wall
 WALL_BOSS_ATTACK_DAMAGE = 20  # Bosses smash through faster
+
+# Anger Mara stuns the first tower it passes within reach
+ANGER_STUN_REACH = 55  # Pixels - just over one tile, so towers beside the path are hit
+TOWER_STUN_TIME = 3.0  # Seconds the tower stops firing
 
 # Ability objects positions
 LOTUS_POND_POS = (2, 12)  # Grid position (in the pond, clear of the lower path)

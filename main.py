@@ -636,19 +636,14 @@ class Game:
         for tower in self.towers:
             tower.update(delta_time, enemies)
             
-            # Check for Anger Mara touching towers (tower damage)
+            # Anger Mara stuns the first tower it passes (once each)
             for enemy in enemies:
-                if hasattr(enemy, 'tower_damage') and enemy.tower_damage > 0:
-                    if not enemy.has_damaged_tower:
-                        # Check collision
-                        distance = enemy.distance_to(tower.x, tower.y)
-                        if distance < (enemy.size + tower.size) // 2:
-                            # Anger Mara damages tower (future: reduce tower stats)
-                            enemy.has_damaged_tower = True
-                            # Visual feedback (create particles at collision)
-                            self.particle_system.create_death_explosion(
-                                tower.x, tower.y, (255, 150, 0)
-                            )
+                if enemy.stuns_towers and not enemy.has_damaged_tower:
+                    if enemy.distance_to(tower.x, tower.y) < ANGER_STUN_REACH:
+                        enemy.has_damaged_tower = True
+                        tower.stun(TOWER_STUN_TIME)
+                        self.particle_system.create_death_explosion(tower.x, tower.y, (255, 150, 0))
+                        self.floating_text.add_text(tower.x, tower.y - 25, "STUNNED", (255, 120, 60), size=20)
         
         # Check for dead enemies and show floating rewards BEFORE removing them
         for enemy in self.wave_manager.enemies:
@@ -668,17 +663,16 @@ class Game:
         
         # Check for temple breaches
         breaches = self.wave_manager.check_temple_breaches()
-        for damage in breaches:
-            self.temple.register_breach(damage)
+        for enemy in breaches:
+            self.temple.register_breach(enemy.temple_damage)
             sounds.play('breach')
-        
-        # Handle special enemy breach effects
-        for enemy in self.wave_manager.enemies[:]:
-            if enemy.reached_temple and hasattr(enemy, 'merit_steal') and enemy.merit_steal > 0:
-                # Envy steals merit
+            
+            # Envy Mara steals Merit when it gets through
+            if enemy.merit_steal > 0:
                 merit_stolen = min(enemy.merit_steal, self.resources.merit)
                 self.resources.merit -= merit_stolen
-                # Visual feedback could be added here
+                self.floating_text.add_text(self.temple.x + self.temple.size // 2, self.temple.y - 40,
+                                            f"-{merit_stolen}M STOLEN", (255, 215, 0), size=24)
         
         # Check victory/defeat conditions
         if self.temple.is_destroyed() or self.temple.meditation_broken():

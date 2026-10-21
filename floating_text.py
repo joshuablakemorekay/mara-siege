@@ -86,6 +86,10 @@ class FloatingTextManager:
         color = (255, 50, 50)  # Bright red
         self.texts.append(FloatingText(x, y, text, color, size=32))
     
+    def add_text(self, x, y, text, color, size=24):
+        """Add any floating message"""
+        self.texts.append(FloatingText(x, y, text, color, size=size))
+    
     def update(self, delta_time):
         """Update all floating texts"""
         self.texts = [text for text in self.texts if text.update(delta_time)]

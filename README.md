@@ -24,7 +24,11 @@ An earlier version grew to 24 rounds of changes and stopped working. I went back
   - The lotus pond (Metta) heals the temple.
   - The Buddha statue (Samadhi Wave) freezes every enemy for 5 seconds.
   - The monk (Karuna Strike) hits every enemy at once, in slow motion.
-- **7 Mara enemies**, each with its own shape, speed and health. Some sway side to side, and Ignorance Mara wears armour.
+- **7 Mara enemies**, each with its own shape, speed and health.
+  - Some sway from side to side.
+  - Ignorance Mara wears armour.
+  - Anger Mara stuns a tower as it passes.
+  - Envy Mara steals your Merit if it reaches the temple.
 - **Boss waves:** the Mara Lord arrives on wave 10 and the Mara Tyrant on the final wave. Each has a big health bar across the top of the screen.
 - **3 resources** to manage:
   - Merit comes from defeating enemies.

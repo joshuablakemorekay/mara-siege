@@ -175,11 +175,11 @@ class WaveManager:
         return total_merit, total_concentration
     
     def check_temple_breaches(self):
-        """Check for enemies that reached the temple - returns the damage each one deals"""
+        """Check for enemies that reached the temple - returns those enemies"""
         breaches = []
         for enemy in self.enemies[:]:
             if enemy.reached_temple:
-                breaches.append(enemy.temple_damage)
+                breaches.append(enemy)
                 self.breaches_this_wave += 1
                 self.enemies.remove(enemy)
         return breaches

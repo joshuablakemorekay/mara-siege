@@ -42,6 +42,7 @@ class Tower:
         self.x = grid_x * TILE_SIZE + TILE_SIZE // 2
         self.y = grid_y * TILE_SIZE + TILE_SIZE // 2
         self.size = 30
+        self.stunned_timer = 0  # Anger Mara can stop a tower firing for a while
         
         # Combat state
         self.target = None
@@ -92,6 +93,11 @@ class Tower:
             if not projectile.active:
                 self.projectiles.remove(projectile)
         
+        # A stunned tower can't fire
+        if self.stunned_timer > 0:
+            self.stunned_timer -= delta_time
+            return
+        
         # Find and attack enemies
         if self.cooldown <= 0:
             target = self.find_target(enemies)
@@ -112,6 +118,10 @@ class Tower:
                     closest_distance = distance
         
         return closest_enemy
+    
+    def stun(self, seconds):
+        """Stop firing for a few seconds"""
+        self.stunned_timer = max(self.stunned_timer, seconds)
     
     def shoot(self, target):
         """Fire projectile at target"""
@@ -158,6 +168,15 @@ class Tower:
         # Draw projectiles
         for projectile in self.projectiles:
             projectile.draw(screen)
+        
+        # Stunned - darken the tower and outline it in red
+        if self.stunned_timer > 0:
+            shade = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
+            shade.fill((0, 0, 0, 140))
+            screen.blit(shade, (self.x - self.size // 2, self.y - self.size // 2))
+            pygame.draw.rect(screen, (220, 60, 30),
+                             (self.x - self.size // 2, self.y - self.size // 2, self.size, self.size), 2)
+            return
         
         # Cooldown indicator (small circle)
         if self.cooldown > 0:

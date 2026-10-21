@@ -124,7 +124,7 @@ class GameGuide:
                     ('', 'space'),
                     ('ANGER (Wave 9+) - Red', 'header'),
                     ('• HP: Medium | Speed: Fast | Rewards: 11M, 5C', 'text'),
-                    ('• Arc movement, damages towers when nearby!', 'text'),
+                    ('• Fast - stuns the first tower it passes for 3s', 'text'),
                 ]
             },
             # Page 5: More Enemies
@@ -138,7 +138,7 @@ class GameGuide:
                     ('', 'space'),
                     ('ENVY (Wave 15+) - Green', 'header'),
                     ('• HP: Medium | Speed: Fast | Rewards: 12M, 6C', 'text'),
-                    ('• Steals 5 Merit when reaching temple', 'text'),
+                    ('• Steals 10 Merit when reaching temple', 'text'),
                     ('', 'space'),
                     ('PRIDE (Wave 18+) - Gold', 'header'),
                     ('• HP: Very High | Speed: Medium | Rewards: 16M, 10C', 'text'),
@@ -388,7 +388,7 @@ class StrategyGuide:
                     ('• Multi-hit towers damage 2-3 enemies per shot', 'text'),
                     ('', 'space'),
                     ('SPECIAL BEHAVIORS', 'header'),
-                    ('• Anger: Damages towers when within 30 pixels', 'text'),
+                    ('• Anger: Stuns a tower it passes for 3 seconds', 'text'),
                     ('• Envy: Steals Merit on temple breach', 'text'),
                     ('• Ignorance: Armor absorbs 3 damage per hit', 'text'),
                     ('• Walls: Enemies attack if blocking path (5 dmg/sec)', 'text'),
