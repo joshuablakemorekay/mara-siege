@@ -7,7 +7,7 @@ from config import *
 class Wall:
     """Wall that slows Mara - upgrades make it burn them, then block them completely"""
     
-    def __init__(self, grid_x, grid_y):
+    def __init__(self, grid_x, grid_y, health_mult=1.0):
         self.grid_x = grid_x
         self.grid_y = grid_y
         
@@ -18,7 +18,8 @@ class Wall:
         
         # Level and health
         self.level = 1
-        self.max_health = WALL_LEVELS[1]['health']
+        self.health_mult = health_mult  # Weaker walls on harder difficulties
+        self.max_health = int(WALL_LEVELS[1]['health'] * health_mult)
         self.health = self.max_health
         self.alive = True
 
@@ -41,8 +42,9 @@ class Wall:
         if not self.can_upgrade():
             return
         self.level += 1
-        extra = self.stats['health'] - self.max_health
-        self.max_health = self.stats['health']
+        new_max = int(self.stats['health'] * self.health_mult)
+        extra = new_max - self.max_health
+        self.max_health = new_max
         self.health += extra
 
     def total_spent(self):

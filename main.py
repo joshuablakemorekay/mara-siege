@@ -51,8 +51,11 @@ class Game:
 
         # Core systems
         self.resources = ResourceManager()
+        self.resources.merit = self.difficulty['starting_merit']
+        self.resources.concentration = self.difficulty['starting_concentration']
+        self.resources.mindfulness = self.difficulty['starting_mindfulness']
         self.temple = Temple()
-        self.wave_manager = WaveManager(self.temple.get_center(), self.paths)
+        self.wave_manager = WaveManager(self.temple.get_center(), self.paths, self.difficulty)
         self.particle_system = ParticleSystem()
         self.floating_text = FloatingTextManager()  # NEW! Damage numbers
         self.abilities = AbilityManager()  # NEW! Special abilities
@@ -370,7 +373,7 @@ class Game:
         )
         
         # Create wall
-        wall = Wall(grid_x, grid_y)
+        wall = Wall(grid_x, grid_y, self.difficulty['wall_health_mult'])
         self.walls.append(wall)
         self.show_message("Wall placed!", (120, 100, 80))
         sounds.play('place')
@@ -581,13 +584,13 @@ class Game:
         wave = self.wave_manager.current_wave
         if self.wave_manager.wave_in_progress and self.bell_rung_for_wave != wave:
             self.bell_rung_for_wave = wave
-            if wave not in BOSS_WAVES:
+            if wave not in self.wave_manager.boss_waves:
                 sounds.play('bell')
 
         # Warn the player once when a boss wave begins
-        if self.wave_manager.wave_in_progress and wave in BOSS_WAVES and self.announced_boss_wave != wave:
+        if self.wave_manager.wave_in_progress and wave in self.wave_manager.boss_waves and self.announced_boss_wave != wave:
             self.announced_boss_wave = wave
-            boss_name = ENEMY_STATS[BOSS_WAVES[wave]]['name']
+            boss_name = ENEMY_STATS[self.wave_manager.boss_waves[wave]]['name']
             self.show_message(f"BOSS WAVE! {boss_name} approaches!", (255, 60, 60))
             sounds.play('gong')
             self.feedback_timer = 4.0

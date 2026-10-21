@@ -343,7 +343,7 @@ class StrategyGuide:
                     ('• Extend wall maze if resources allow', 'text'),
                     ('', 'space'),
                     ('BOSS WAVES', 'header'),
-                    ('• Wave 10: Mara Lord • Wave 20: Mara Tyrant', 'text'),
+                    ('• Wave 10: Mara Lord • Final wave: Mara Tyrant', 'text'),
                     ('• Focus fire: All Viriya towers target boss', 'text'),
                     ('• Use Samadhi Wave to freeze + burst damage', 'text'),
                     ('', 'space'),

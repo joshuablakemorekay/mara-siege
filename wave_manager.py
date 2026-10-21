@@ -3,8 +3,8 @@ Wave Manager - Handles spawning waves of enemies
 """
 
 import random
-from config import (WAVE_DELAY, ENEMIES_PER_WAVE_BASE,
-                   WAVE_DIFFICULTY_MULTIPLIER, BOSS_WAVES)
+from config import (ENEMIES_PER_WAVE_BASE,
+                   WAVE_DIFFICULTY_MULTIPLIER, BOSS_WAVES, FINAL_BOSS)
 from enemy import (DoubtMara, CravingMara, DelusionMara, AngerMara,
                    IgnoranceMara, EnvyMara, PrideMara,
                    BossMaraLord, BossMaraTyrant)
@@ -13,11 +13,12 @@ from enemy import (DoubtMara, CravingMara, DelusionMara, AngerMara,
 class WaveManager:
     """Manages enemy waves and spawning"""
     
-    def __init__(self, temple_position, paths):
+    def __init__(self, temple_position, paths, difficulty):
+        self.difficulty = difficulty  # Settings dict from difficulty.py
         self.current_wave = 0
         self.wave_in_progress = False
         self.wave_complete = False
-        self.time_until_next_wave = WAVE_DELAY
+        self.time_until_next_wave = difficulty['wave_delay']
         self.breaches_this_wave = 0  # Track breaches per wave
         
         # Temple position for enemy targeting
@@ -30,8 +31,10 @@ class WaveManager:
         self.spawn_timer = 0
         self.spawn_interval = 0.8  # Seconds between each enemy spawn
         
-        # Victory condition tracking
-        self.total_waves = 20
+        # Victory condition tracking - the final boss always comes on the last wave
+        self.total_waves = difficulty['waves']
+        self.boss_waves = dict(BOSS_WAVES)
+        self.boss_waves[self.total_waves] = FINAL_BOSS
     
     def start_next_wave(self):
         """Start the next wave of enemies"""
@@ -44,7 +47,7 @@ class WaveManager:
         self.breaches_this_wave = 0  # Reset breach counter
         
         # Calculate wave composition based on current wave
-        num_enemies = int(ENEMIES_PER_WAVE_BASE + self.current_wave * 1.5)
+        num_enemies = int((ENEMIES_PER_WAVE_BASE + self.current_wave * 1.5) * self.difficulty['enemy_count_mult'])
         
         # Queue enemies to spawn with progressive introduction
         self.enemies_to_spawn = []
@@ -59,8 +62,8 @@ class WaveManager:
             self.enemies_to_spawn.append((enemy_type, path))
 
         # Boss joins at the end of its wave, marching down the main road
-        if self.current_wave in BOSS_WAVES:
-            self.enemies_to_spawn.append((BOSS_WAVES[self.current_wave], self.paths[0]))
+        if self.current_wave in self.boss_waves:
+            self.enemies_to_spawn.append((self.boss_waves[self.current_wave], self.paths[0]))
 
         self.spawn_timer = 0
     
@@ -102,7 +105,7 @@ class WaveManager:
             self.time_until_next_wave -= delta_time
             if self.time_until_next_wave <= 0:
                 self.start_next_wave()
-                self.time_until_next_wave = WAVE_DELAY
+                self.time_until_next_wave = self.difficulty['wave_delay']
         else:
             # Spawn queued enemies
             if self.enemies_to_spawn:
@@ -132,6 +135,7 @@ class WaveManager:
                     else:
                         enemy = DoubtMara(path, self.temple_position, self.current_wave)
                     
+                    self.apply_difficulty(enemy)
                     self.enemies.append(enemy)
                     self.spawn_timer = 0
             
@@ -143,6 +147,15 @@ class WaveManager:
             if not self.enemies_to_spawn and not any(e.alive for e in self.enemies):
                 self.wave_complete = True
                 self.wave_in_progress = False
+    
+    def apply_difficulty(self, enemy):
+        """Scale a new enemy's health, speed and rewards for the chosen difficulty"""
+        enemy.max_health = int(enemy.max_health * self.difficulty['enemy_health_mult'])
+        enemy.health = enemy.max_health
+        enemy.base_speed *= self.difficulty['enemy_speed_mult']
+        enemy.speed = enemy.base_speed
+        enemy.merit_reward = max(1, round(enemy.merit_reward * self.difficulty['reward_mult']))
+        enemy.concentration_reward = round(enemy.concentration_reward * self.difficulty['reward_mult'])
     
     def get_active_enemies(self):
         """Return list of alive enemies"""

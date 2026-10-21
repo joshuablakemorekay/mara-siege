@@ -231,11 +231,12 @@ ENEMY_STATS = {
     }
 }
 
-# Boss waves: wave number -> boss type
+# Boss waves: wave number -> boss type. The final boss is added on the last wave,
+# which depends on difficulty (15 to 30 waves)
 BOSS_WAVES = {
-    10: 'boss_mara_lord',
-    20: 'boss_mara_tyrant'  # Final wave
+    10: 'boss_mara_lord'
 }
+FINAL_BOSS = 'boss_mara_tyrant'
 
 # Wave settings
 WAVE_DELAY = 15.0  # Seconds between waves (was 5.0)
