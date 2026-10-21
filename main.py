@@ -102,7 +102,7 @@ class Game:
                 if event.button == 1:  # Left click
                     self.handle_left_click(event.pos)
                 elif event.button == 3:  # Right click - upgrade selected tower or wall
-                    self.try_upgrade_tower()
+                    self.try_upgrade_selected()
             
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -211,7 +211,7 @@ class Game:
             self.show_message("Not enough resources to upgrade!", (255, 100, 100))
             sounds.play('error')
 
-    def try_upgrade_tower(self):
+    def try_upgrade_selected(self):
         """Attempt to upgrade the selected tower or wall (right-click)"""
         if self.selected_wall:
             self.try_upgrade_wall()
