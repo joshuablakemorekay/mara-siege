@@ -6,7 +6,7 @@ A Buddhist-themed tower defense game made with Python and Pygame. You protect a 
 
 **[Download and play it free on itch.io](https://smoald.itch.io/mara-siege)** (Windows, no install needed).
 
-![Wave 10 on the Temple Garden map: towers on the grass terraces, an upgraded wall on the path, and the Mara Lord boss marching toward the temple](docs/screenshot.png)
+![Wave 10 in Open Field mode: towers built anywhere on the open grass while a crowd of Mara closes in on the temple](docs/screenshot.png)
 
 ## What I built and why
 
