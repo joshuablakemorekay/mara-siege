@@ -48,6 +48,18 @@ An earlier version grew to 24 rounds of changes and stopped working. I went back
 - **Selling:** hover over a tower or wall and press S to get half its cost back.
 - **Sound effects** generated in code: temple bells, a boss gong, singing-bowl tones and more. Press M to mute.
 
+## Screenshots
+
+The cover and screenshots from the itch.io store page.
+
+<p align="center"><img src="itch_page/cover_630x500.png" alt="Mara's Siege cover image" width="420"></p>
+
+<table>
+  <tr><td align="center"><img src="itch_page/1_temple_garden.png" alt="Temple Garden map" width="400"><br>Temple Garden map</td><td align="center"><img src="itch_page/2_boss_wave.png" alt="The Mara Lord boss wave" width="400"><br>The Mara Lord boss wave</td></tr>
+  <tr><td align="center"><img src="itch_page/3_wall_upgrades.png" alt="Upgraded walls on the path" width="400"><br>Upgraded walls on the path</td><td align="center"><img src="itch_page/4_open_field.png" alt="Open Field mode" width="400"><br>Open Field mode</td></tr>
+  <tr><td align="center"><img src="itch_page/5_menu.png" alt="Main menu" width="400"><br>Main menu</td></tr>
+</table>
+
 ## How to play
 
 | Key / mouse | What it does |
